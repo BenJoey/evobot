@@ -55,7 +55,7 @@ export default {
       queue.enqueue(song);
 
       return message
-        .reply(i18n.__mf("play.queueAdded", { title: song.title, author: message.author }))
+        .reply(i18n.__mf("play.queueAdded", { title: song.title }))
         .catch(console.error);
     }
 
