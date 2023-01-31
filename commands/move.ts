@@ -26,7 +26,7 @@ export default {
 
     queue.textChannel.send(
       i18n.__mf("move.result", {
-        author: message.author,
+        author: message.author.username,
         title: song.title,
         index: args[1] == 1 ? 1 : args[1]
       })

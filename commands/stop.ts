@@ -14,6 +14,6 @@ export default {
 
     queue.stop();
 
-    queue.textChannel.send(i18n.__mf("stop.result", { author: message.author })).catch(console.error);
+    queue.textChannel.send(i18n.__mf("stop.result", { author: message.author.username })).catch(console.error);
   }
 };

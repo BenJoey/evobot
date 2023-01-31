@@ -15,7 +15,7 @@ export default {
 
     if (queue.player.unpause()) {
       queue.textChannel
-        .send(i18n.__mf("resume.resultNotPlaying", { author: message.author }))
+        .send(i18n.__mf("resume.resultNotPlaying", { author: message.author.username }))
         .catch(console.error);
 
       return true;

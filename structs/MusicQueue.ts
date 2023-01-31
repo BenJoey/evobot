@@ -223,10 +223,10 @@ export class MusicQueue {
           this.muted = !this.muted;
           if (this.muted) {
             this.resource.volume?.setVolumeLogarithmic(0);
-            this.textChannel.send(i18n.__mf("play.mutedSong", { author: user })).catch(console.error);
+            this.textChannel.send(i18n.__mf("play.mutedSong", { author: user.username })).catch(console.error);
           } else {
             this.resource.volume?.setVolumeLogarithmic(this.volume / 100);
-            this.textChannel.send(i18n.__mf("play.unmutedSong", { author: user })).catch(console.error);
+            this.textChannel.send(i18n.__mf("play.unmutedSong", { author: user.username })).catch(console.error);
           }
           break;
 
@@ -237,7 +237,7 @@ export class MusicQueue {
           this.volume = Math.max(this.volume - 10, 0);
           this.resource.volume?.setVolumeLogarithmic(this.volume / 100);
           this.textChannel
-            .send(i18n.__mf("play.decreasedVolume", { author: user, volume: this.volume }))
+            .send(i18n.__mf("play.decreasedVolume", { author: user.username, volume: this.volume }))
             .catch(console.error);
           break;
 
@@ -248,7 +248,7 @@ export class MusicQueue {
           this.volume = Math.min(this.volume + 10, 100);
           this.resource.volume?.setVolumeLogarithmic(this.volume / 100);
           this.textChannel
-            .send(i18n.__mf("play.increasedVolume", { author: user, volume: this.volume }))
+            .send(i18n.__mf("play.increasedVolume", { author: user.username, volume: this.volume }))
             .catch(console.error);
           break;
 

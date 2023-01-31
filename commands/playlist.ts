@@ -74,7 +74,7 @@ export default {
 
     message
       .reply({
-        content: i18n.__mf("playlist.startedPlaylist", { author: message.author }),
+        content: i18n.__mf("playlist.startedPlaylist", { author: message.author.username }),
         embeds: [playlistEmbed]
       })
       .catch(console.error);

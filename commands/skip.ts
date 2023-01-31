@@ -16,6 +16,6 @@ export default {
 
     queue.player.stop(true);
 
-    queue.textChannel.send(i18n.__mf("skip.result", { author: message.author })).catch(console.error);
+    queue.textChannel.send(i18n.__mf("skip.result", { author: message.author.username })).catch(console.error);
   }
 };
