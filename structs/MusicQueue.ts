@@ -205,15 +205,15 @@ export class MusicQueue {
       switch (reaction.emoji.name) {
         case "⏭":
           reaction.users.remove(user).catch(console.error);
-          await this.bot.commands.get("skip")!.execute(this.message);
+          await this.bot.commands.get("skip")!.execute(this.message, user);
           break;
 
         case "⏯":
           reaction.users.remove(user).catch(console.error);
           if (this.player.state.status == AudioPlayerStatus.Playing) {
-            await this.bot.commands.get("pause")!.execute(this.message);
+            await this.bot.commands.get("pause")!.execute(this.message, user);
           } else {
-            await this.bot.commands.get("resume")!.execute(this.message);
+            await this.bot.commands.get("resume")!.execute(this.message, user);
           }
           break;
 
@@ -259,12 +259,12 @@ export class MusicQueue {
 
         case "🔀":
           reaction.users.remove(user).catch(console.error);
-          await this.bot.commands.get("shuffle")!.execute(this.message);
+          await this.bot.commands.get("shuffle")!.execute(this.message, user);
           break;
 
         case "⏹":
           reaction.users.remove(user).catch(console.error);
-          await this.bot.commands.get("stop")!.execute(this.message);
+          await this.bot.commands.get("stop")!.execute(this.message, user);
           collector.stop();
           break;
 

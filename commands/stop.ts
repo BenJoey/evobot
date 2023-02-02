@@ -1,4 +1,4 @@
-import { Message } from "discord.js";
+import { Message, User } from "discord.js";
 import { bot } from "../index";
 import { i18n } from "../utils/i18n";
 import { canModifyQueue } from "../utils/queue";
@@ -6,7 +6,7 @@ import { canModifyQueue } from "../utils/queue";
 export default {
   name: "stop",
   description: i18n.__("stop.description"),
-  execute(message: Message) {
+  execute(message: Message, user: User) {
     const queue = bot.queues.get(message.guild!.id);
 
     if (!queue) return message.reply(i18n.__("stop.errorNotQueue")).catch(console.error);
@@ -14,6 +14,8 @@ export default {
 
     queue.stop();
 
-    queue.textChannel.send(i18n.__mf("stop.result", { author: message.author.username })).catch(console.error);
+    const username = user != undefined ? user.username : message.author.username;
+
+    queue.textChannel.send(i18n.__mf("stop.result", { author: username })).catch(console.error);
   }
 };
