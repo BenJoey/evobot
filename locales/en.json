@@ -60,7 +60,7 @@
     "cantJoinChannel": "Could not join the channel: {error}",
     "queueEnded": "❌ Music queue ended.",
     "queueError": "Error: {error}",
-    "startedPlaying": "🎶 Started playing: **{title}** {url}",
+    "startedPlaying": "🎶 Started playing: **{title}** <{url}>",
     "skipSong": "{author} ⏩ skipped the song",
     "pauseSong": "{author} ⏸ paused the music.",
     "resumeSong": "{author} ▶ resumed the music!",
