@@ -202,24 +202,22 @@ export class MusicQueue {
 
       const member = await playingMessage.guild!.members.fetch(user);
 
+      reaction.users.remove(user).catch(console.error);
+      if (!canModifyQueue(member)) return i18n.__("common.errorNotChannel");
+
+      let command:string = "";
       switch (reaction.emoji.name) {
-        case "⏭":
-          reaction.users.remove(user).catch(console.error);
-          await this.bot.commands.get("skip")!.execute(this.message, user);
-          break;
+        case "⏭": command = "skip"; break;
 
         case "⏯":
-          reaction.users.remove(user).catch(console.error);
           if (this.player.state.status == AudioPlayerStatus.Playing) {
-            await this.bot.commands.get("pause")!.execute(this.message, user);
+            command = "pause";
           } else {
-            await this.bot.commands.get("resume")!.execute(this.message, user);
+            command = "resume";
           }
           break;
 
         case "🔇":
-          reaction.users.remove(user).catch(console.error);
-          if (!canModifyQueue(member)) return i18n.__("common.errorNotChannel");
           this.muted = !this.muted;
           if (this.muted) {
             this.resource.volume?.setVolumeLogarithmic(0);
@@ -231,9 +229,7 @@ export class MusicQueue {
           break;
 
         case "🔉":
-          reaction.users.remove(user).catch(console.error);
           if (this.volume == 0) return;
-          if (!canModifyQueue(member)) return i18n.__("common.errorNotChannel");
           this.volume = Math.max(this.volume - 10, 0);
           this.resource.volume?.setVolumeLogarithmic(this.volume / 100);
           this.textChannel
@@ -242,9 +238,7 @@ export class MusicQueue {
           break;
 
         case "🔊":
-          reaction.users.remove(user).catch(console.error);
           if (this.volume == 100) return;
-          if (!canModifyQueue(member)) return i18n.__("common.errorNotChannel");
           this.volume = Math.min(this.volume + 10, 100);
           this.resource.volume?.setVolumeLogarithmic(this.volume / 100);
           this.textChannel
@@ -252,25 +246,20 @@ export class MusicQueue {
             .catch(console.error);
           break;
 
-        case "🔁":
-          reaction.users.remove(user).catch(console.error);
-          await this.bot.commands.get("loop")!.execute(this.message);
-          break;
-
-        case "🔀":
-          reaction.users.remove(user).catch(console.error);
-          await this.bot.commands.get("shuffle")!.execute(this.message, user);
-          break;
-
-        case "⏹":
-          reaction.users.remove(user).catch(console.error);
-          await this.bot.commands.get("stop")!.execute(this.message, user);
-          collector.stop();
-          break;
-
+        case "🔁": command = "loop"; break;
+        case "🔀": command = "shuffle"; break;
+        case "⏹": command = "stop"; break;
         default:
-          reaction.users.remove(user).catch(console.error);
           break;
+      }
+
+      try {
+        if(command) {
+          await this.bot.commands.get(command)!.execute(this.message, user);
+          if(command == "stop") collector.stop();
+        }
+      } catch (e) {
+        console.log("Error during emote response" + e);
       }
     });
 
