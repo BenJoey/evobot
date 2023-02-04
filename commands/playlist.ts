@@ -57,20 +57,14 @@ export default {
       bot.queues.set(message.guild!.id, newQueue);
       newQueue.songs.push(...playlist.videos);
 
-      newQueue.enqueue(playlist.videos[0]);
+      newQueue.processQueue();
     }
 
     let playlistEmbed = new EmbedBuilder()
       .setTitle(`${playlist.data.title}`)
-      .setDescription(playlist.videos.map((song: Song, index: number) => `${index + 1}. ${song.title}`).join("\n"))
       .setURL(playlist.data.url!)
       .setColor("#F8AA2A")
       .setTimestamp();
-
-    if (playlistEmbed.data.description!.length >= 2048)
-      playlistEmbed.setDescription(
-        playlistEmbed.data.description!.substr(0, 2007) + i18n.__("playlist.playlistCharLimit")
-      );
 
     message
       .reply({
