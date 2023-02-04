@@ -5,7 +5,6 @@ import { bot } from "../index";
 
 export default {
   name: "skip",
-  aliases: ["s"],
   description: i18n.__("skip.description"),
   execute(message: Message, user: User) {
     const queue = bot.queues.get(message.guild!.id);
@@ -16,7 +15,7 @@ export default {
 
     queue.player.stop(true);
 
-    const username = user != undefined ? user.username : message.author.username;
+    const username = (user !== undefined && user.hasOwnProperty('username')) ? user.username : message.author.username;
 
     queue.textChannel.send(i18n.__mf("skip.result", { author: username })).catch(console.error);
   }

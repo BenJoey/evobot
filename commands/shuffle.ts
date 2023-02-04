@@ -22,7 +22,7 @@ export default {
 
     queue.songs = songs;
 
-    const username = user != undefined ? user.username : message.author.username;
+    const username = (user !== undefined && user.hasOwnProperty('username')) ? user.username : message.author.username;
 
     queue.textChannel.send(i18n.__mf("shuffle.result", { author: username })).catch(console.error);
   }

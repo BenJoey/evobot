@@ -13,7 +13,7 @@ export default {
 
     if (!canModifyQueue(message.member!)) return i18n.__("common.errorNotChannel");
 
-    const username = user != undefined ? user.username : message.author.username;
+    const username = (user !== undefined && user.hasOwnProperty('username')) ? user.username : message.author.username;
 
     if (queue.player.pause()) {
       queue.textChannel.send(i18n.__mf("pause.result", { author: username })).catch(console.error);

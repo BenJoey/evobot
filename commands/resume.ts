@@ -13,7 +13,7 @@ export default {
     if (!queue) return message.reply(i18n.__("resume.errorNotQueue")).catch(console.error);
     if (!canModifyQueue(message.member!)) return i18n.__("common.errorNotChannel");
 
-    const username = user != undefined ? user.username : message.author.username;
+    const username = (user !== undefined && user.hasOwnProperty('username')) ? user.username : message.author.username;
 
     if (queue.player.unpause()) {
       queue.textChannel

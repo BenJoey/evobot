@@ -7,6 +7,7 @@ type CustomTextChannel = TextChannel & { activeCollector: boolean };
 
 export default {
   name: "search",
+  aliases: ["s"],
   description: i18n.__("search.description"),
   async execute(message: Message, args: any[]) {
     if (!args.length)
