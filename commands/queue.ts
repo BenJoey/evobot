@@ -41,7 +41,7 @@ export default {
           if (currentPage < embeds.length - 1) {
             currentPage++;
             queueEmbed.edit({
-              content: i18n.__mf("queue.currentPage", { page: currentPage + 1, length: embeds.length }),
+              content: `**${i18n.__mf("queue.currentPage")} ${currentPage + 1}/${embeds.length}**`,
               embeds: [embeds[currentPage]]
             });
           }
@@ -49,12 +49,13 @@ export default {
           if (currentPage !== 0) {
             --currentPage;
             queueEmbed.edit({
-              content: i18n.__mf("queue.currentPage", { page: currentPage + 1, length: embeds.length }),
+              content: `**${i18n.__mf("queue.currentPage")} ${currentPage + 1}/${embeds.length}**`,
               embeds: [embeds[currentPage]]
             });
           }
         } else {
           collector.stop();
+          await bot.commands.get("stop")!.execute(message, user);
           reaction.message.reactions.removeAll();
         }
         await reaction.users.remove(message.author.id);
