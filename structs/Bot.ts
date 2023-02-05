@@ -43,7 +43,7 @@ export class Bot {
 
   private async onMessageCreate() {
     this.client.on("messageCreate", async (message: any) => {
-      const checkChannelId: boolean = this.channelId ? message.channel != this.channelId : true;
+      const checkChannelId: boolean = this.channelId ? message.channel != this.channelId : false;
       if (message.author.bot || !message.guild || checkChannelId) return;
 
       const prefixRegex = new RegExp(`^(<@!?${this.client.user!.id}>|${escapeRegex(this.prefix)})\\s*`);
