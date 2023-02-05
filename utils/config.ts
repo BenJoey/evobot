@@ -13,8 +13,7 @@ try {
     PRUNING: process.env.PRUNING === "true" ? true : false,
     STAY_TIME: parseInt(process.env.STAY_TIME!) || 30,
     DEFAULT_VOLUME: parseInt(process.env.DEFAULT_VOLUME!) || 100,
-    LOCALE: process.env.LOCALE || "en",
-    CHANNEL: process.env.CHANNEL || ""
+    LOCALE: process.env.LOCALE || "en"
   };
 }
 
