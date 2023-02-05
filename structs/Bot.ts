@@ -12,6 +12,7 @@ const escapeRegex = (str: string) => str.replace(/[.*+?^${}()|[\]\\]/, "\\$&");
 
 export class Bot {
   public readonly prefix = config.PREFIX;
+  public readonly channelId = config.CHANNEL;
   public commands = new Collection<string, Command>();
   public cooldowns = new Collection<string, Collection<Snowflake, number>>();
   public queues = new Collection<Snowflake, MusicQueue>();
@@ -42,7 +43,8 @@ export class Bot {
 
   private async onMessageCreate() {
     this.client.on("messageCreate", async (message: any) => {
-      if (message.author.bot || !message.guild) return;
+      const checkChannelId: boolean = this.channelId ? message.channel != this.channelId : true;
+      if (message.author.bot || !message.guild || checkChannelId) return;
 
       const prefixRegex = new RegExp(`^(<@!?${this.client.user!.id}>|${escapeRegex(this.prefix)})\\s*`);
       if (!prefixRegex.test(message.content)) return;
