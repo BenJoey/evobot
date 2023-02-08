@@ -161,10 +161,26 @@ export class MusicQueue {
       this.resource.volume?.setVolumeLogarithmic(this.volume / 100);
     } catch (error) {
       console.error(error);
-
+      let skippedSong = this.songs.shift();
+      this.sendErrorMessage(skippedSong?.title, error);
+      this.queueLock = false;
       return this.processQueue();
     } finally {
       this.queueLock = false;
+    }
+  }
+
+  private async sendErrorMessage(song: string | undefined, error: any) {
+    let errMsg = "";
+    try {
+      switch(error.statusCode) {
+        case 410: errMsg = i18n.__mf("common.ageRestriction", { song: song }); break;
+        default: return;
+      }
+      await this.textChannel.send(errMsg);
+    } catch (e) {
+      console.error(e);
+      return;
     }
   }
 
