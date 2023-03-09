@@ -49,6 +49,12 @@
     "description": "Show the bot's average ping",
     "result": "📈 Average ping to API: {ping} ms"
   },
+  "priority" : {
+    "description" : "Puts the song next in the queue",
+    "usageReply": "Usage: {prefix}priority <YouTube URL | Video Name | Soundcloud URL>",
+    "noListReply" : "There is no playlist to use priority. Use {prefix}play",
+    "added": "✅ **{title}** has been added to the queue with priority"
+  },
   "play": {
     "description": "Plays audio from YouTube or Soundcloud",
     "errorNotChannel": "You need to join a voice channel first!",

@@ -116,6 +116,14 @@ export class MusicQueue {
     this.processQueue();
   }
 
+  public enqueuePrio(...songs: Song[]) {
+    if (this.waitTimeout !== null) clearTimeout(this.waitTimeout);
+    this.waitTimeout = null;
+    this.stopped = false;
+    this.songs = songs.concat(this.songs);
+    this.processQueue();
+  }
+
   public stop() {
     if (this.stopped) return;
 
