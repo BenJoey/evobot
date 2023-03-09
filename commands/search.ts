@@ -15,7 +15,8 @@ export default {
         .reply(i18n.__mf("search.usageReply", { prefix: bot.prefix, name: module.exports.name }))
         .catch(console.error);
 
-    if ((message.channel as CustomTextChannel).activeCollector)
+    let channel: TextChannel = message.channel as TextChannel;
+    if ((channel as CustomTextChannel).activeCollector)
       return message.reply(i18n.__("search.errorAlreadyCollector"));
 
     if (!message.member?.voice.channel) return message.reply(i18n.__("search.errorNotChannel")).catch(console.error);
@@ -37,7 +38,7 @@ export default {
         })
       );
 
-      let resultsMessage = await message.channel.send({ embeds: [resultsEmbed] });
+      let resultsMessage = await channel.send({ embeds: [resultsEmbed] });
 
       function filter(msg: Message) {
         const pattern = /^[1-9][0]?(\s*,\s*[1-9][0]?)*$/;
@@ -46,7 +47,7 @@ export default {
 
       (message.channel as CustomTextChannel).activeCollector = true;
 
-      const response = await message.channel.awaitMessages({ filter, max: 1, time: 30000, errors: ["time"] });
+      const response = await channel.awaitMessages({ filter, max: 1, time: 30000, errors: ["time"] });
       const reply = response.first()!.content;
 
       if (reply.includes(",")) {

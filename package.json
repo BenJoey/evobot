@@ -1,6 +1,6 @@
 {
   "name": "evobot",
-  "version": "2.5.1",
+  "version": "2.6.1",
   "description": "Discord music bot built with discord.js",
   "main": "index.ts",
   "author": "Erit Islami <eritislami@gmail.com>",
@@ -34,14 +34,14 @@
   },
   "devDependencies": {
     "@types/i18n": "^0.13.6",
-    "@types/node": "^18.11.18",
+    "@types/node": "^18.14.0",
     "cz-conventional-changelog": "^3.0.1",
     "nodemon": "^2.0.20",
     "ts-node": "^10.9.1"
   },
   "optionalDependencies": {
     "@discordjs/opus": "^0.9.0",
-    "libsodium-wrappers": "^0.7.10",
+    "libsodium-wrappers": "^0.7.11",
     "opusscript": "^0.0.8",
     "sodium-native": "^3.4.1",
     "tweetnacl": "^1.0.3"
