@@ -120,6 +120,9 @@ export class MusicQueue {
     if (this.waitTimeout !== null) clearTimeout(this.waitTimeout);
     this.waitTimeout = null;
     this.stopped = false;
+    let currentSong = this.songs.shift();
+    if(currentSong == undefined) return;
+    songs.unshift(currentSong);
     this.songs = songs.concat(this.songs);
     this.processQueue();
   }
