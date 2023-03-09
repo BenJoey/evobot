@@ -54,8 +54,8 @@ export default {
     if (queue) {
       queue.enqueue(song);
 
-      return message
-        .reply(i18n.__mf("play.queueAdded", { title: song.title }))
+      return queue.textChannel
+        .send(i18n.__mf("play.queueAdded", { title: song.title }))
         .catch(console.error);
     }
 

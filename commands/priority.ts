@@ -1,13 +1,11 @@
-import { DiscordGatewayAdapterCreator, joinVoiceChannel } from "@discordjs/voice";
 import { Message, PermissionsBitField } from "discord.js";
 import { bot } from "../index";
-import { MusicQueue } from "../structs/MusicQueue";
 import { Song } from "../structs/Song";
 import { i18n } from "../utils/i18n";
 import { playlistPattern } from "../utils/patterns";
 export default {
   name: "priority",
-  cooldown: 3,
+  cooldown: 5,
   description: i18n.__("priority.description"),
   permissions: [
     PermissionsBitField.Flags.Connect,
@@ -53,8 +51,8 @@ export default {
 
     queue.enqueuePrio(song);
 
-    return message
-      .reply(i18n.__mf("priority.added", { title: song.title }))
+    return queue.textChannel
+      .send(i18n.__mf("priority.added", { title: song.title }))
       .catch(console.error);
   }
 };

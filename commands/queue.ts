@@ -16,7 +16,7 @@ export default {
     let currentPage = 0;
     const embeds = generateQueueEmbed(message, queue.songs);
 
-    const queueEmbed = await message.reply({
+    const queueEmbed = await queue.textChannel.send({
       content: `**${i18n.__mf("queue.currentPage")} ${currentPage + 1}/${embeds.length}**`,
       embeds: [embeds[currentPage]]
     });
