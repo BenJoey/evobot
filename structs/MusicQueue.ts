@@ -57,7 +57,7 @@ export class MusicQueue {
       const newNetworking = Reflect.get(newState, 'networking');
       oldNetworking?.off('stateChange', networkStateChangeHandler);
       newNetworking?.on('stateChange', networkStateChangeHandler);
-      
+
       if (newState.status === VoiceConnectionStatus.Disconnected) {
         if (newState.reason === VoiceConnectionDisconnectReason.WebSocketClose && newState.closeCode === 4014) {
           try {
@@ -182,7 +182,6 @@ export class MusicQueue {
       this.player.play(this.resource);
       this.resource.volume?.setVolumeLogarithmic(this.volume / 100);
     } catch (error) {
-      console.error(error);
       let skippedSong = this.songs.shift();
       this.sendErrorMessage(skippedSong?.title, error);
       this.queueLock = false;

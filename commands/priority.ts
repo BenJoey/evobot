@@ -44,7 +44,6 @@ export default {
     try {
       song = await Song.from(url, args.join(" "));
     } catch (error) {
-      console.error(error);
       return message.reply(getErrorMessage(error)).catch(console.error);
     } finally {
       await loadingReply.delete();
