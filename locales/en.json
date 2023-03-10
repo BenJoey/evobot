@@ -171,6 +171,6 @@
     "errorCommand": "There was an error executing that command.",
     "errorCommandWithCode": "There was an error executing that command. Error code: {code}",
     "ageRestriction" : "Skipped age restricted song: {song}",
-    "ageRestrictionNoSong" : "I can not play age restriced songs UwU"
+    "ageRestrictionNoSong" : "I can not play age restricted songs UwU"
   }
 }
