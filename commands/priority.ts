@@ -2,6 +2,7 @@ import { Message, PermissionsBitField } from "discord.js";
 import { bot } from "../index";
 import { Song } from "../structs/Song";
 import { i18n } from "../utils/i18n";
+import { getErrorMessage } from "../utils/errorMessage";
 import { playlistPattern } from "../utils/patterns";
 export default {
   name: "priority",
@@ -44,7 +45,7 @@ export default {
       song = await Song.from(url, args.join(" "));
     } catch (error) {
       console.error(error);
-      return message.reply(i18n.__("common.errorCommand")).catch(console.error);
+      return message.reply(getErrorMessage(error)).catch(console.error);
     } finally {
       await loadingReply.delete();
     }

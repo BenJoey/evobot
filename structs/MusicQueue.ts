@@ -17,6 +17,7 @@ import { bot } from "../index";
 import { QueueOptions } from "../interfaces/QueueOptions";
 import { config } from "../utils/config";
 import { i18n } from "../utils/i18n";
+import { getErrorMessage } from "../utils/errorMessage";
 import { canModifyQueue } from "../utils/queue";
 import { Song } from "./Song";
 
@@ -182,17 +183,7 @@ export class MusicQueue {
   }
 
   private async sendErrorMessage(song: string | undefined, error: any) {
-    let errMsg = "";
-    try {
-      switch(error.statusCode) {
-        case 410: errMsg = i18n.__mf("common.ageRestriction", { song: song }); break;
-        default: return;
-      }
-      await this.textChannel.send(errMsg);
-    } catch (e) {
-      console.error(e);
-      return;
-    }
+    await this.textChannel.send(getErrorMessage(error, song));
   }
 
   private async sendPlayingMessage(newState: any) {

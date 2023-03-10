@@ -169,6 +169,8 @@
     "errorNotChannel": "You need to join a voice channel first!",
     "cooldownMessage": "please wait {time} more second(s) before reusing the `{name}` command.",
     "errorCommand": "There was an error executing that command.",
-    "ageRestriction" : "Skipped age restricted song: {song}"
+    "errorCommandWithCode": "There was an error executing that command. Error code: {code}",
+    "ageRestriction" : "Skipped age restricted song: {song}",
+    "ageRestrictionNoSong" : "I can not play age restriced songs UwU"
   }
 }
