@@ -148,7 +148,7 @@ export class MusicQueue {
 
     !config.PRUNING && this.textChannel.send(i18n.__("play.queueEnded")).catch(console.error);
 
-    if (this.waitTimeout !== null) return;
+    if (this.waitTimeout !== null) clearTimeout(this.waitTimeout);
 
     this.waitTimeout = setTimeout(() => {
       if (this.connection.state.status !== VoiceConnectionStatus.Destroyed) {
