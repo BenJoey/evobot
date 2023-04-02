@@ -112,6 +112,12 @@
     "usageReply": "Usage: {prefix}remove <Queue Number>",
     "result": "{author} ❌ removed **{title}** from the queue."
   },
+  "removefrom": {
+    "description": "Remove all songs from the queue starting from given number",
+    "errorNotQueue": "There is no queue.",
+    "usageReply": "Usage: {prefix}removefrom <Queue Number>",
+    "result": "{author} ❌ removed {count} songs from the queue."
+  },
   "resume": {
     "description": "Resume currently playing music",
     "errorNotQueue": "There is nothing playing.",
