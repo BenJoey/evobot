@@ -21,7 +21,6 @@ export class Logger {
             this.latestLogs.shift();
         }
 
-        console.log(message);
         this.latestLogs.push(message);
     }
 
