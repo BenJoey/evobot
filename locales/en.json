@@ -16,6 +16,9 @@
   "invite": {
     "description": "Send bot invite link"
   },
+  "logs" : {
+    "description" : "Send the latest logs to the channel as txt file"
+  },
   "loop": {
     "description": "Toggle music loop",
     "errorNotQueue": "There is nothing playing.",
