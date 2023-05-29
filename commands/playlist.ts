@@ -4,6 +4,7 @@ import { bot } from "../index";
 import { MusicQueue } from "../structs/MusicQueue";
 import { Playlist } from "../structs/Playlist";
 import { i18n } from "../utils/i18n";
+import { Logger } from "../structs/Logger";
 
 export default {
   name: "playlist",
@@ -17,6 +18,7 @@ export default {
     PermissionsBitField.Flags.ManageMessages
   ],
   async execute(message: Message, args: any[]) {
+    Logger.getInstance().logMessage("Playlist command received", "commands.playlist");
     const { channel } = message.member!.voice;
 
     const queue = bot.queues.get(message.guild!.id);
@@ -34,13 +36,15 @@ export default {
     let playlist;
 
     try {
+      Logger.getInstance().logMessage("Searching for playlist", "commands.playlist");
       playlist = await Playlist.from(args[0], args.join(" "));
     } catch (error) {
-      console.error(error);
+      Logger.getInstance().logMessage((error as string), "commands.playlist");
 
       return message.reply(i18n.__("playlist.errorNotFoundPlaylist")).catch(console.error);
     }
 
+    Logger.getInstance().logMessage("Adding playlist to the queue", "commands.playlist");
     if (queue) {
       queue.songs.push(...playlist.videos);
     } else {

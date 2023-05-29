@@ -7,6 +7,7 @@ import { config } from "../utils/config";
 import { i18n } from "../utils/i18n";
 import { MissingPermissionsException } from "../utils/MissingPermissionsException";
 import { MusicQueue } from "./MusicQueue";
+import { Logger } from "./Logger";
 
 const escapeRegex = (str: string) => str.replace(/[.*+?^${}()|[\]\\]/, "\\$&");
 
@@ -24,8 +25,8 @@ export class Bot {
       client.user!.setActivity(`${this.prefix}help and ${this.prefix}play`, { type: ActivityType.Listening });
     });
 
-    this.client.on("warn", (info) => console.log(info));
-    this.client.on("error", console.error);
+    this.client.on("warn", (info) => Logger.getInstance().logMessage(info, "Bot.warn"));
+    this.client.on("error", (error) => Logger.getInstance().logMessage(error.message, "Bot.error"));
 
     this.importCommands();
     this.onMessageCreate();
@@ -83,6 +84,7 @@ export class Bot {
         const permissionsCheck: PermissionResult = await checkPermissions(command, message);
 
         if (permissionsCheck.result) {
+          Logger.getInstance().logMessage("Received command " + commandName + " with the following args: " + args.join('-'), "Bot");
           command.execute(message, args);
         } else {
           throw new MissingPermissionsException(permissionsCheck.missing);

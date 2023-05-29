@@ -2,6 +2,7 @@ import { Message, EmbedBuilder, TextChannel } from "discord.js";
 import youtube from "youtube-sr";
 import { bot } from "../index";
 import { i18n } from "../utils/i18n";
+import { Logger } from "../structs/Logger";
 
 type CustomTextChannel = TextChannel & { activeCollector: boolean };
 
@@ -10,6 +11,7 @@ export default {
   aliases: ["s"],
   description: i18n.__("search.description"),
   async execute(message: Message, args: any[]) {
+    Logger.getInstance().logMessage("Search command received", "commands.search");
     if (!args.length)
       return message
         .reply(i18n.__mf("search.usageReply", { prefix: bot.prefix, name: module.exports.name }))
@@ -29,6 +31,7 @@ export default {
       .setColor("#F8AA2A");
 
     try {
+      Logger.getInstance().logMessage("Searching for: " + search, "commands.search");
       const results = await youtube.search(search, { limit: 10, type: "video" });
 
       results.map((video, index) =>
@@ -65,7 +68,7 @@ export default {
       resultsMessage.delete().catch(console.error);
       response.first()!.delete().catch(console.error);
     } catch (error: any) {
-      console.error(error);
+      Logger.getInstance().logMessage("Search command error: " + (error as string), "commands.search");
       (message.channel as CustomTextChannel).activeCollector = false;
       message.reply(i18n.__("common.errorCommand")).catch(console.error);
     }

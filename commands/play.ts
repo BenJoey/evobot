@@ -6,6 +6,8 @@ import { Song } from "../structs/Song";
 import { i18n } from "../utils/i18n";
 import { getErrorMessage } from "../utils/errorMessage";
 import { playlistPattern } from "../utils/patterns";
+import { Logger } from "../structs/Logger";
+
 export default {
   name: "play",
   cooldown: 3,
@@ -18,6 +20,7 @@ export default {
     PermissionsBitField.Flags.ManageMessages
   ],
   async execute(message: Message, args: string[]) {
+    Logger.getInstance().logMessage("Play command received", "commands.play");
     const { channel } = message.member!.voice;
 
     if (!channel) return message.reply(i18n.__("play.errorNotChannel")).catch(console.error);
@@ -41,12 +44,15 @@ export default {
       return bot.commands.get("playlist")!.execute(message, args);
     }
 
-    let song;
+    let song:Song;
 
     try {
+      Logger.getInstance().logMessage("Searching for song: " + args.join(" "), "commands.play");
       song = await Song.from(url, args.join(" "));
     } catch (error) {
-      return message.reply(getErrorMessage(error)).catch(console.error);
+      let errMsg = getErrorMessage(error);
+      Logger.getInstance().logMessage(errMsg, "commands.play");
+      return message.reply(errMsg).catch(console.error);
     } finally {
       await loadingReply.delete();
     }
@@ -59,6 +65,7 @@ export default {
         .catch(console.error);
     }
 
+    Logger.getInstance().logMessage("Creating new queue", "commands.play");
     const newQueue = new MusicQueue({
       message,
       connection: joinVoiceChannel({

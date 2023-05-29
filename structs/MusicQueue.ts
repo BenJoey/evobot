@@ -20,6 +20,7 @@ import { i18n } from "../utils/i18n";
 import { getErrorMessage } from "../utils/errorMessage";
 import { canModifyQueue } from "../utils/queue";
 import { Song } from "./Song";
+import { Logger } from "./Logger";
 
 const wait = promisify(setTimeout);
 
@@ -53,6 +54,8 @@ export class MusicQueue {
     this.connection.subscribe(this.player);
 
     this.connection.on("stateChange" as any, async (oldState: VoiceConnectionState, newState: VoiceConnectionState) => {
+      Logger.getInstance().logMessage("Old state: " + oldState, "MusicQueue.VoiceConnectionstateChange");
+      Logger.getInstance().logMessage("New state: " + newState, "MusicQueue.VoiceConnectionstateChange");
       const oldNetworking = Reflect.get(oldState, 'networking');
       const newNetworking = Reflect.get(newState, 'networking');
       oldNetworking?.off('stateChange', networkStateChangeHandler);
@@ -92,6 +95,8 @@ export class MusicQueue {
     });
 
     this.player.on("stateChange" as any, async (oldState: AudioPlayerState, newState: AudioPlayerState) => {
+      Logger.getInstance().logMessage("Old state: " + oldState, "MusicQueue.AudioPlayerstateChange");
+      Logger.getInstance().logMessage("New state: " + newState, "MusicQueue.AudioPlayerstateChange");
       if (oldState.status !== AudioPlayerStatus.Idle && newState.status === AudioPlayerStatus.Idle) {
         if (this.loop && this.songs.length) {
           this.songs.push(this.songs.shift()!);
@@ -107,6 +112,7 @@ export class MusicQueue {
     });
 
     this.player.on("error", (error) => {
+      Logger.getInstance().logMessage(error.message, "MusicQueue.error");
       console.error(error);
 
       if (this.loop && this.songs.length) {
@@ -120,6 +126,7 @@ export class MusicQueue {
   }
 
   public enqueue(...songs: Song[]) {
+    Logger.getInstance().logMessage("Adding song(s) to the queue", "MusicQueue.enqueue");
     if (this.waitTimeout !== null) clearTimeout(this.waitTimeout);
     this.waitTimeout = null;
     this.stopped = false;
@@ -128,6 +135,7 @@ export class MusicQueue {
   }
 
   public enqueuePrio(...songs: Song[]) {
+    Logger.getInstance().logMessage("Adding song(s) to the queue with priority", "MusicQueue.enqueuePrio");
     if (this.waitTimeout !== null) clearTimeout(this.waitTimeout);
     this.waitTimeout = null;
     this.stopped = false;
@@ -141,6 +149,7 @@ export class MusicQueue {
   public stop() {
     if (this.stopped) return;
 
+    Logger.getInstance().logMessage("Stopping the queue", "MusicQueue.stop");
     this.stopped = true;
     this.loop = false;
     this.songs = [];
@@ -163,6 +172,7 @@ export class MusicQueue {
   }
 
   public async processQueue(): Promise<void> {
+    Logger.getInstance().logMessage("Processing the queue", "MusicQueue.processQueue");
     if (this.queueLock || this.player.state.status !== AudioPlayerStatus.Idle) {
       return;
     }
@@ -192,7 +202,9 @@ export class MusicQueue {
   }
 
   private async sendErrorMessage(song: string | undefined, error: any) {
-    await this.textChannel.send(getErrorMessage(error, song));
+    let errMsg = getErrorMessage(error, song);
+    Logger.getInstance().logMessage(errMsg, "MusicQueue.sendErrorMessage");
+    await this.textChannel.send(errMsg);
   }
 
   private async sendPlayingMessage(newState: any) {

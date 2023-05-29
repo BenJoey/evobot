@@ -16,12 +16,12 @@ export class Logger {
         return this.myInstance;
     }
 
-    public logMessage(message:string): void {
+    public logMessage(message:string, module:string = ""): void {
         if(this.latestLogs.length >= this.logSize) {
             this.latestLogs.shift();
         }
 
-        this.latestLogs.push(message);
+        this.latestLogs.push(module + " >> " + message);
     }
 
     public async sendLogToChannel(channel:TextChannel): Promise<void> {
