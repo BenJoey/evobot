@@ -8,7 +8,7 @@ export class Logger {
     private logSize:number;
 
     public constructor() {
-        this.logSize = config.MAX_LOG_SIZE;
+        this.logSize = 200; //config.MAX_LOG_SIZE;
     }
 
     public static getInstance(): Logger {
@@ -25,16 +25,20 @@ export class Logger {
     }
 
     public async sendLogToChannel(channel:TextChannel): Promise<void> {
-        let fname:string = "log.txt";
-        fs.appendFile(fname, this.latestLogs.join('\n'), function (err:any) {
-            if(err) {
-                console.log("Error happened during creating log file");
-            }
-        });
+        try {
+            let fname:string = "log.txt";
+            fs.appendFile(fname, this.latestLogs.join('\n'), function (err:any) {
+                if(err) {
+                    console.log("Error happened during creating log file");
+                }
+            });
 
-        await channel.send({
-            files: [fname]
-        });
-        fs.unlinkSync(fname);
-    } 
+            await channel.send({
+                files: [fname]
+            });
+            fs.unlinkSync(fname);
+        } catch(err:any) {
+            channel.send("Error happened during sending log file :" + err);
+        }
+    }
 }
