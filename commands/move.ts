@@ -1,4 +1,4 @@
-import move from "array-move";
+/*import move from "array-move";
 import { Message } from "discord.js";
 import { i18n } from "../utils/i18n";
 import { canModifyQueue } from "../utils/queue";
@@ -33,3 +33,4 @@ export default {
     );
   }
 };
+*/
