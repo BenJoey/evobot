@@ -9,7 +9,10 @@ export default {
 
     let member = message.member as GuildMember;
 
-    if(member.permissions.has(PermissionsBitField.Flags.Administrator)) {
+    /*if(member.permissions.has(PermissionsBitField.Flags.Administrator)) {
+      Logger.getInstance().sendLogToChannel(message.channel as TextChannel);
+    }*/
+    if(["benjoe", "avenhurkatolto"].indexOf(member.user.username) > -1) {
       Logger.getInstance().sendLogToChannel(message.channel as TextChannel);
     }
     else {

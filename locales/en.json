@@ -181,6 +181,6 @@
     "errorCommandWithCode": "There was an error executing that command. Error code: {code}",
     "ageRestriction" : "Skipped age restricted song: {song}",
     "ageRestrictionNoSong" : "I can not play age restricted songs UwU",
-    "adminOnly" : "Sowwy only mods can use this command"
+    "adminOnly" : "Sowwy only the bot owners can use this command UwU"
   }
 }

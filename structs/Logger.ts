@@ -50,6 +50,10 @@ export class Logger {
             });
 
             fs.unlinkSync("logs.zip");
+            const fsExtra = require('fs-extra');
+            fsExtra.emptyDirSync("logs/");
+            this.fileCount = 0;
+            this.createNewLogFile();
         } catch(err:any) {
             channel.send("Error happened during sending log file :" + err);
         }
