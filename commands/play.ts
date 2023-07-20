@@ -51,7 +51,7 @@ export default {
       song = await Song.from(url, args.join(" "));
     } catch (error) {
       let errMsg = getErrorMessage(error);
-      Logger.getInstance().logMessage(errMsg, "commands.play");
+      Logger.getInstance().logMessage("Error during play command", "commands.play", error);
       return message.reply(errMsg).catch(console.error);
     } finally {
       await loadingReply.delete();

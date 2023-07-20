@@ -26,7 +26,7 @@ export class Bot {
     });
 
     this.client.on("warn", (info) => Logger.getInstance().logMessage(info, "Bot.warn"));
-    this.client.on("error", (error) => Logger.getInstance().logMessage(error.message, "Bot.error"));
+    this.client.on("error", (error) => Logger.getInstance().logMessage("Client error:", "Bot.error", error.message));
 
     this.importCommands();
     this.onMessageCreate();

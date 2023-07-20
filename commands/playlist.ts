@@ -39,7 +39,7 @@ export default {
       Logger.getInstance().logMessage("Searching for playlist", "commands.playlist");
       playlist = await Playlist.from(args[0], args.join(" "));
     } catch (error) {
-      Logger.getInstance().logMessage((error as string), "commands.playlist");
+      Logger.getInstance().logMessage("Error during playlist command", "commands.playlist", error);
 
       return message.reply(i18n.__("playlist.errorNotFoundPlaylist")).catch(console.error);
     }

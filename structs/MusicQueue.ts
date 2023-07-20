@@ -54,8 +54,7 @@ export class MusicQueue {
     this.connection.subscribe(this.player);
 
     this.connection.on("stateChange" as any, async (oldState: VoiceConnectionState, newState: VoiceConnectionState) => {
-      Logger.getInstance().logMessage("Old state: " + oldState, "MusicQueue.VoiceConnectionstateChange");
-      Logger.getInstance().logMessage("New state: " + newState, "MusicQueue.VoiceConnectionstateChange");
+      Logger.getInstance().logMessage("Changing VoiceConnectionState to: ", "MusicQueue.VoiceConnectionstateChange", newState.status);
       const oldNetworking = Reflect.get(oldState, 'networking');
       const newNetworking = Reflect.get(newState, 'networking');
       oldNetworking?.off('stateChange', networkStateChangeHandler);
@@ -95,8 +94,7 @@ export class MusicQueue {
     });
 
     this.player.on("stateChange" as any, async (oldState: AudioPlayerState, newState: AudioPlayerState) => {
-      Logger.getInstance().logMessage("Old state: " + oldState, "MusicQueue.AudioPlayerstateChange");
-      Logger.getInstance().logMessage("New state: " + newState, "MusicQueue.AudioPlayerstateChange");
+      Logger.getInstance().logMessage("Changing AudioPlayerState to: ", "MusicQueue.AudioPlayerstateChange", newState.status);
       if (oldState.status !== AudioPlayerStatus.Idle && newState.status === AudioPlayerStatus.Idle) {
         if (this.loop && this.songs.length) {
           this.songs.push(this.songs.shift()!);
@@ -112,7 +110,7 @@ export class MusicQueue {
     });
 
     this.player.on("error", (error) => {
-      Logger.getInstance().logMessage(error.message, "MusicQueue.error");
+      Logger.getInstance().logMessage("Player error:", "MusicQueue.error", error.message);
       console.error(error);
 
       if (this.loop && this.songs.length) {

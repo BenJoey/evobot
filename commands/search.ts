@@ -68,7 +68,7 @@ export default {
       resultsMessage.delete().catch(console.error);
       response.first()!.delete().catch(console.error);
     } catch (error: any) {
-      Logger.getInstance().logMessage("Search command error: " + (error as string), "commands.search");
+      Logger.getInstance().logMessage("Search command error:", "commands.search", error);
       (message.channel as CustomTextChannel).activeCollector = false;
       message.reply(i18n.__("common.errorCommand")).catch(console.error);
     }
