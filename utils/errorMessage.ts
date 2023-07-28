@@ -5,7 +5,7 @@ export function getErrorMessage(error:any, extra: any = undefined): string {
       switch(error.statusCode) {
         case 410: 
             return extra == undefined ? i18n.__mf("common.ageRestrictionNoSong") : i18n.__mf("common.ageRestriction", { song: extra });
-        default: return i18n.__mf("common.errorCommandWithCode", { code: error.statusCode });
+        default: return i18n.__mf("common.errorCommandUnknown", { err: error });
       }
     } catch (e) {
       console.error(e);
