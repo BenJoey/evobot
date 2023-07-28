@@ -17,7 +17,7 @@
     "description": "Send bot invite link"
   },
   "logs" : {
-    "description" : "Send the latest logs to the channel as txt file"
+    "description" : "Send the latest logs to the channel as txt file. Can only be used by bot owners."
   },
   "loop": {
     "description": "Toggle music loop",
