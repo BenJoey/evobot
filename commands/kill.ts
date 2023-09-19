@@ -4,7 +4,7 @@ import { Message, User, GuildMember } from "discord.js";
 import { bot } from "../index";
 
 export default {
-  name: "logs",
+  name: "kill",
   description: i18n.__("kill.description"),
   execute(message: Message, user: User) {
     let member = message.member as GuildMember;
