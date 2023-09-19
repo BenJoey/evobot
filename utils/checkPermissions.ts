@@ -16,3 +16,7 @@ export async function checkPermissions(command: Command, message: Message): Prom
 
   return { result: !Boolean(missing.length), missing };
 }
+
+export function isBotOwner(username: string): boolean {
+  return ["benjoe", "avenhurkatolto"].indexOf(username) > -1;
+}

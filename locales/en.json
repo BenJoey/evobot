@@ -16,8 +16,11 @@
   "invite": {
     "description": "Send bot invite link"
   },
-  "logs" : {
-    "description" : "Send the latest logs to the channel as txt file. Can only be used by bot owners."
+  "logs": {
+    "description": "Send the latest logs to the channel as txt file. Can only be used by bot owners."
+  },
+  "kill": {
+    "description": "Shuts down all instances of the bot. Can only be used by bot owners."
   },
   "loop": {
     "description": "Toggle music loop",
@@ -52,10 +55,10 @@
     "description": "Show the bot's average ping",
     "result": "📈 Average ping to API: {ping} ms"
   },
-  "priority" : {
-    "description" : "Puts the song next in the queue",
+  "priority": {
+    "description": "Puts the song next in the queue",
     "usageReply": "Usage: {prefix}priority <YouTube URL | Video Name | Soundcloud URL>",
-    "noListReply" : "There is no playlist to use priority. Use {prefix}play",
+    "noListReply": "There is no playlist to use priority. Use {prefix}play",
     "added": "✅ **{title}** has been added to the queue with priority"
   },
   "play": {
@@ -179,8 +182,8 @@
     "cooldownMessage": "please wait {time} more second(s) before reusing the `{name}` command.",
     "errorCommand": "There was an error executing that command.",
     "errorCommandUnknown": "There was an error executing that command. Error: {err}",
-    "ageRestriction" : "Skipped age restricted song: {song}",
-    "ageRestrictionNoSong" : "I can not play age restricted songs UwU",
-    "adminOnly" : "Sowwy only the bot owners can use this command UwU"
+    "ageRestriction": "Skipped age restricted song: {song}",
+    "ageRestrictionNoSong": "I can not play age restricted songs UwU",
+    "adminOnly": "Sowwy only the bot owners can use this command UwU"
   }
 }
