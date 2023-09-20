@@ -6,7 +6,7 @@ This is my own modified version of [eritislami's music bot](https://github.com/e
 
 - The repo has a built in logger which creates logs into text files and can be requested via the `logs` command.
 - If the bot is somehow stuck you can kill all the instances via the `kill` command.
-- The previous 2 commands can only be used by bot owners. If you host the bot yourself you can modified the owner name strings in the `checkPermissions.ts` file.
+- The previous 2 commands can only be used by bot owners. If you host the bot yourself you can modifiy the owner name strings in the `checkPermissions.ts` file.
 - Created new `priority` command which puts the requested song next in the queue
 
 ## Locales
