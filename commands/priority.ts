@@ -4,6 +4,7 @@ import { Song } from "../structs/Song";
 import { i18n } from "../utils/i18n";
 import { getErrorMessage } from "../utils/errorMessage";
 import { playlistPattern } from "../utils/patterns";
+import { getShortcut } from "../utils/shortcuts";
 export default {
   name: "priority",
   cooldown: 5,
@@ -26,10 +27,11 @@ export default {
         .reply(i18n.__mf("play.errorNotInSameChannel", { user: bot.client.user!.username }))
         .catch(console.error);
 
-    if (!args.length) return message.reply(i18n.__mf("priority.usageReply", { prefix: bot.prefix })).catch(console.error);
+    if (!args.length)
+      return message.reply(i18n.__mf("priority.usageReply", { prefix: bot.prefix })).catch(console.error);
     if (!queue) return message.reply(i18n.__mf("priority.noListReply", { prefix: bot.prefix })).catch(console.error);
 
-    const url = args[0];
+    const url = getShortcut(args[0]);
 
     const loadingReply = await message.reply("⏳ Loading...");
 
@@ -51,8 +53,6 @@ export default {
 
     queue.enqueuePrio(song);
 
-    return queue.textChannel
-      .send(i18n.__mf("priority.added", { title: song.title }))
-      .catch(console.error);
+    return queue.textChannel.send(i18n.__mf("priority.added", { title: song.title })).catch(console.error);
   }
 };

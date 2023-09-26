@@ -10,6 +10,8 @@ This is my own modified version of [eritislami's music bot](https://github.com/e
 - Other new commands:
   - `priority`: Puts the requested song next in the queue
   - `removefrom`: Removes all songs from the list starting from the index received
+- Shortcuts feature: You can add shortcuts to YT videos in the `shortcuts.json` file and if you call the `play` command with that key it will use the URL in the json file.
+  **Note:** The key must be a single word (no spaces, dashes or anything like that).
 
 ## Locales
 

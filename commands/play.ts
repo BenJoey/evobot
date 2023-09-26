@@ -6,6 +6,7 @@ import { Song } from "../structs/Song";
 import { i18n } from "../utils/i18n";
 import { getErrorMessage } from "../utils/errorMessage";
 import { playlistPattern } from "../utils/patterns";
+import { getShortcut } from "../utils/shortcuts";
 import { Logger } from "../structs/Logger";
 
 export default {
@@ -34,7 +35,7 @@ export default {
 
     if (!args.length) return message.reply(i18n.__mf("play.usageReply", { prefix: bot.prefix })).catch(console.error);
 
-    const url = args[0];
+    const url = getShortcut(args[0]);
 
     const loadingReply = await message.reply("⏳ Loading...");
 
@@ -44,7 +45,7 @@ export default {
       return bot.commands.get("playlist")!.execute(message, args);
     }
 
-    let song:Song;
+    let song: Song;
 
     try {
       Logger.getInstance().logMessage("Searching for song: " + args.join(" "), "commands.play");
@@ -60,9 +61,7 @@ export default {
     if (queue) {
       queue.enqueue(song);
 
-      return queue.textChannel
-        .send(i18n.__mf("play.queueAdded", { title: song.title }))
-        .catch(console.error);
+      return queue.textChannel.send(i18n.__mf("play.queueAdded", { title: song.title })).catch(console.error);
     }
 
     Logger.getInstance().logMessage("Creating new queue", "commands.play");
