@@ -6,7 +6,6 @@ import { Song } from "../structs/Song";
 import { i18n } from "../utils/i18n";
 import { getErrorMessage } from "../utils/errorMessage";
 import { playlistPattern } from "../utils/patterns";
-import { getShortcut } from "../utils/shortcuts";
 import { Logger } from "../structs/Logger";
 
 export default {
@@ -35,7 +34,7 @@ export default {
 
     if (!args.length) return message.reply(i18n.__mf("play.usageReply", { prefix: bot.prefix })).catch(console.error);
 
-    const url = getShortcut(args[0]);
+    const url = bot.shortCuts[args[0]] ? bot.shortCuts[args[0]] : args[0];
 
     const loadingReply = await message.reply("⏳ Loading...");
 

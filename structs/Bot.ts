@@ -16,6 +16,7 @@ export class Bot {
   public commands = new Collection<string, Command>();
   public cooldowns = new Collection<string, Collection<Snowflake, number>>();
   public queues = new Collection<Snowflake, MusicQueue>();
+  public shortCuts = require("../shortcuts.json");
 
   public constructor(public readonly client: Client) {
     this.client.login(config.TOKEN);
@@ -84,7 +85,10 @@ export class Bot {
         const permissionsCheck: PermissionResult = await checkPermissions(command, message);
 
         if (permissionsCheck.result) {
-          Logger.getInstance().logMessage("Received command " + commandName + " with the following args: " + args.join('-'), "Bot");
+          Logger.getInstance().logMessage(
+            "Received command " + commandName + " with the following args: " + args.join("-"),
+            "Bot"
+          );
           command.execute(message, args);
         } else {
           throw new MissingPermissionsException(permissionsCheck.missing);
