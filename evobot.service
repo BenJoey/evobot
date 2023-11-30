@@ -1,0 +1,11 @@
+[Unit]
+Description=evobot
+
+[Service]
+Type=simple
+Restart=always
+WorkingDirectory=/home/geryon/evobot
+ExecStart=npm start
+
+[Install]
+WantedBy=multi-user.target
