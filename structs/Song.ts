@@ -1,6 +1,6 @@
 import { AudioResource, createAudioResource, StreamType } from "@discordjs/voice";
 import youtube from "youtube-sr";
-import { getInfo } from "ytdl-core";
+import { getInfo } from "@distube/ytdl-core";
 import ytdl from "ytdl-core-discord";
 import { i18n } from "../utils/i18n";
 import { videoPattern } from "../utils/patterns";

@@ -65,3 +65,4 @@ typings/
 # Temp ignore
 config.json
 config_test.json
+*.bat

@@ -25,9 +25,9 @@ import { Logger } from "./Logger";
 const wait = promisify(setTimeout);
 
 const networkStateChangeHandler = (oldNetworkState: any, newNetworkState: any) => {
-  const newUdp = Reflect.get(newNetworkState, 'udp');
+  const newUdp = Reflect.get(newNetworkState, "udp");
   clearInterval(newUdp?.keepAliveInterval);
-}
+};
 
 export class MusicQueue {
   public readonly message: Message;
@@ -54,11 +54,15 @@ export class MusicQueue {
     this.connection.subscribe(this.player);
 
     this.connection.on("stateChange" as any, async (oldState: VoiceConnectionState, newState: VoiceConnectionState) => {
-      Logger.getInstance().logMessage("Changing VoiceConnectionState to: ", "MusicQueue.VoiceConnectionstateChange", newState.status);
-      const oldNetworking = Reflect.get(oldState, 'networking');
-      const newNetworking = Reflect.get(newState, 'networking');
-      oldNetworking?.off('stateChange', networkStateChangeHandler);
-      newNetworking?.on('stateChange', networkStateChangeHandler);
+      Logger.getInstance().logMessage(
+        "Changing VoiceConnectionState to: ",
+        "MusicQueue.VoiceConnectionstateChange",
+        newState.status
+      );
+      const oldNetworking = Reflect.get(oldState, "networking");
+      const newNetworking = Reflect.get(newState, "networking");
+      oldNetworking?.off("stateChange", networkStateChangeHandler);
+      newNetworking?.on("stateChange", networkStateChangeHandler);
 
       if (newState.status === VoiceConnectionStatus.Disconnected) {
         if (newState.reason === VoiceConnectionDisconnectReason.WebSocketClose && newState.closeCode === 4014) {
@@ -94,7 +98,11 @@ export class MusicQueue {
     });
 
     this.player.on("stateChange" as any, async (oldState: AudioPlayerState, newState: AudioPlayerState) => {
-      Logger.getInstance().logMessage("Changing AudioPlayerState to: ", "MusicQueue.AudioPlayerstateChange", newState.status);
+      Logger.getInstance().logMessage(
+        "Changing AudioPlayerState to: ",
+        "MusicQueue.AudioPlayerstateChange",
+        newState.status
+      );
       if (oldState.status !== AudioPlayerStatus.Idle && newState.status === AudioPlayerStatus.Idle) {
         if (this.loop && this.songs.length) {
           this.songs.push(this.songs.shift()!);
@@ -138,7 +146,7 @@ export class MusicQueue {
     this.waitTimeout = null;
     this.stopped = false;
     let currentSong = this.songs.shift();
-    if(currentSong == undefined) return;
+    if (currentSong == undefined) return;
     songs.unshift(currentSong);
     this.songs = songs.concat(this.songs);
     this.processQueue();
@@ -206,6 +214,7 @@ export class MusicQueue {
   }
 
   private async sendPlayingMessage(newState: any) {
+    Logger.getInstance().logMessage("in sendplaying");
     const song = (newState.resource as AudioResource<Song>).metadata;
 
     let playingMessage: Message;
@@ -242,9 +251,11 @@ export class MusicQueue {
       reaction.users.remove(user).catch(console.error);
       if (!canModifyQueue(member)) return i18n.__("common.errorNotChannel");
 
-      let command:string = "";
+      let command: string = "";
       switch (reaction.emoji.name) {
-        case "⏭": command = "skip"; break;
+        case "⏭":
+          command = "skip";
+          break;
 
         case "⏯":
           if (this.player.state.status == AudioPlayerStatus.Playing) {
@@ -283,17 +294,23 @@ export class MusicQueue {
             .catch(console.error);
           break;
 
-        case "🔁": command = "loop"; break;
-        case "🔀": command = "shuffle"; break;
-        case "⏹": command = "stop"; break;
+        case "🔁":
+          command = "loop";
+          break;
+        case "🔀":
+          command = "shuffle";
+          break;
+        case "⏹":
+          command = "stop";
+          break;
         default:
           break;
       }
 
       try {
-        if(command) {
+        if (command) {
           await this.bot.commands.get(command)!.execute(this.message, user);
-          if(command == "stop") collector.stop();
+          if (command == "stop") collector.stop();
         }
       } catch (e) {
         console.log("Error during emote response" + e);
